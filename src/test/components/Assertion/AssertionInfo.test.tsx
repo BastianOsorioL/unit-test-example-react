@@ -1,27 +1,33 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { AssertionData } from '../../../components/Assertion/AssertionData';
+import { MockedProvider } from '@apollo/client/testing';
+import { mockAssertionInfo } from '../../mocks/AssertionInfo';
+import { AssertionInfo } from '../../../components/Assertion/AssertionInfo';
 
 describe('AssertionInfo component test', () => {
-  const findAssertion = {
-    id: 'clau64wf002610157si73b29x',
-    nameRecipient: 'Bastián',
-    lastNameRecipient: 'Osorio',
-    emailRecipient: 'bastian.osorio@trebol-it.com',
-    issuedOn: '2022-11-23',
-  };
-
-  const data = {
-    findAssertion,
-  };
-
-  it('renders AssertionData component', () => {
-    render(<AssertionData data={data.findAssertion} />);
+  it('render AssertionInfo component with apollo query', async () => {
+    const { findByText, debug } = render(
+      <MockedProvider
+        mocks={mockAssertionInfo.mockApolloQuery}
+        addTypename={false}
+      >
+        <AssertionInfo />
+      </MockedProvider>
+    );
+    expect(await findByText('Loading...')).toBeInTheDocument();
   });
 
-  it('data tests', () => {
-    render(<AssertionData data={data.findAssertion} />);
-    const header = screen.getByText(`ID: ${data.findAssertion.id}`);
-    expect(header).toBeInTheDocument();
+  it('Apollo query fails in AssertionInfo', async () => {
+    const { findByText } = render(
+      <MockedProvider
+        mocks={mockAssertionInfo.errorApolloQuery}
+        addTypename={false}
+      >
+        <AssertionInfo />
+      </MockedProvider>
+    );
+
+    expect(await findByText('Loading...')).toBeInTheDocument();
+    expect(await findByText('ERROR QUERY')).toBeInTheDocument();
   });
 });

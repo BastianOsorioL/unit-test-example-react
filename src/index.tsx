@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { AssertionInfo } from './components/Assertion/AssertionInfo';
+import { ApolloProvider } from '@apollo/client';
+import { clientMain } from './graphql/client';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AssertionInfo />
+    <ApolloProvider client={clientMain}>
+      <AssertionInfo />
+    </ApolloProvider>
   </React.StrictMode>
 );
 
