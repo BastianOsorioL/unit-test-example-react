@@ -13,22 +13,11 @@ const data = {
   findAssertion,
 };
 
-const errors = {
-  errors: [
-    {
-      message: 'Emisión no encontrada',
-    },
-  ],
-  data: {
-    findAssertion: null,
-  },
-};
-
 const mocks = [
   {
     request: {
       query: GET_ASSERTION,
-      variables: { id: 'eee' },
+      variables: { id: 'clau64wf002610157si73b29x' },
     },
     result: {
       data,

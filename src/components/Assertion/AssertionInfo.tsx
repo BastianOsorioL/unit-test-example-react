@@ -7,21 +7,13 @@ export const AssertionInfo = () => {
     variables: { id: 'clau64wf002610157si73b29x' },
   });
 
+  if (loading) return <>Loading...</>;
+  if (error) return <>ERROR QUERY</>;
+
   return (
     <div>
-      {loading ? (
-        <>Loading...</>
-      ) : (
-        <>
-          {error ? (
-            <>ERROR QUERY</>
-          ) : (
-            <>
-              <AssertionData data={data.findAssertion} />
-            </>
-          )}
-        </>
-      )}
+      <p>INFO ASSERTION</p>
+      <AssertionData data={data.findAssertion} />
     </div>
   );
 };
